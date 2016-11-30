@@ -1,189 +1,63 @@
-import { Component } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
 
-interface Data {
-    category: string;
-    segments: Array<Block>;
-}
-interface Block {
-    start: number,
-    end: number,
-    color: string,
-    task: string
-}
-interface Configuration {
-    dataProvider: Array<Data>;
-    fillColors: string;
-}
-
-const makeChart = ({ dataProvider, fillColors }: Configuration) => {
-    return {
-        "type": "serial",
-        "theme": "light",
-        "marginRight": 70,
-        "columnWidth": 0.5,
-        "dataProvider": dataProvider,
-        "valueAxes": [{
-            "type": "date",
-            "title": "Visitors from country"
-        }],
-        "brightnessStep": 7,
-        "graph": {
-            "fillAlphas": 1,
-            "lineAlpha": 1,
-            "lineColor": "#fff",
-            //"fillAlphas": 0.85,
-            "balloonText": "<b>[[category]]</b><br>starts at [[startTime]]<br>ends at [[endTime]]"
-        },
-        "rotate": true,
-        "categoryField": "category",
-        "segmentsField": "segments",
-        "colorField": "color",
-        "startDateField": "start",
-        "endDateField": "end",
-        "export": {
-            "enabled": true
-        },
-        "valueScrollbar": {
-            "autoGridCount": true
-        },
-        "chartCursor": {
-            "cursorColor": "#55bb76",
-            "valueBalloonsEnabled": false,
-            "cursorAlpha": 0,
-            "valueLineAlpha": 0.5,
-            "valueLineBalloonEnabled": true,
-            "valueLineEnabled": true,
-            "zoomable": false,
-            "valueZoomable": true
-        }
-    };
-};
-
+declare var google: any;
 @Component({
     moduleId: module.id,
     selector: 'activeresourcetask',
     templateUrl: 'activeresourcetask.html'
 })
-export class ActiveResourceTaskComponent {
-    private id: string = "chartdiv";
+export class ActiveResourceTaskComponent implements OnInit {
+    constructor() {
+        
+    };
+    ngOnInit(){let data = new google.visualization.DataTable();
+        data.addColumn('string', 'Task ID');
+        data.addColumn('string', 'Task Name');
+        data.addColumn('string', 'Resource');
+        data.addColumn('date', 'Start Date');
+        data.addColumn('date', 'End Date');
+        data.addColumn('number', 'Duration');
+        data.addColumn('number', 'Percent Complete');
+        data.addColumn('string', 'Dependencies');
 
-    private data: any = [{
-        "category": "Module #1",
-        "segments": [{
-            "start": 1,
-            "end": 2,
-            "color": "#b9783f",
-            "task": "Gathering requirements"
-        }, {
-            "start": 4,
-            "end": 5,
-            "task": "Producing specifications"
-        }, {
-            "start": 7,
-            "end": 10,
-            "task": "Development"
-        }, {
-            "start": 11,
-            "end": 13,
-            "task": "Testing and QA"
-        }]
-    }, {
-        "category": "Module #2",
-        "segments": [{
-            "start": 1,
-            "end": 3,
-            "color": "#cc4748",
-            "task": "Gathering requirements"
-        }, {
-            "start": 4,
-            "end": 5,
-            "task": "Producing specifications"
-        }, {
-            "start": 5,
-            "end": 7,
-            "task": "Development"
-        }, {
-            "start": 7,
-            "end": 9,
-            "task": "Testing and QA"
-        }]
-    }, {
-        "category": "Module #3",
-        "segments": [{
-            "start": 2,
-            "end": 4,
-            "color": "#cd82ad",
-            "task": "Gathering requirements"
-        }, {
-            "start":5,
-            "end": 6,
-            "task": "Producing specifications"
-        }, {
-            "start": 6,
-            "end": 7,
-            "task": "Development"
-        }, {
-            "start": 7,
-            "end": 8,
-            "task": "Testing and QA"
-        }]
-    }, {
-        "category": "Module #4",
-        "segments": [{
-            "start": 3,
-            "end": 4,
-            "color": "#2f4074",
-            "task": "Gathering requirements"
-        }, {
-            "start": 6,
-            "end": 7,
-            "task": "Producing specifications"
-        }, {
-            "start": 7,
-            "end": 8,
-            "task": "Development"
-        }, {
-            "start": 11,
-            "end": 13,
-            "task": "Testing and QA"
-        }]
-    }, {
-        "category": "Module #5",
-        "segments": [{
-            "start": 4,
-            "end":6,
-            "color": "#448e4d",
-            "task": "Gathering requirements"
-        }, {
-            "start": 6,
-            "end": 7,
-            "task": "Producing specifications"
-        }, {
-            "start": 8,
-            "end": 9,
-            "task": "Development"
-        }, {
-            "start": 9,
-            "end": 11,
-            "task": "Testing and QA"
-        }]
-    }];
+        data.addRows([
+            ['2014Spring', 'Spring 2014', 'spring',
+                new Date(2014, 2, 22), new Date(2014, 5, 20), null, 100, null],
+            ['2014Summer', 'Summer 2014', 'summer',
+                new Date(2014, 5, 21), new Date(2014, 8, 20), null, 100, null],
+            ['2014Autumn', 'Autumn 2014', 'autumn',
+                new Date(2014, 8, 21), new Date(2014, 11, 20), null, 100, null],
+            ['2014Winter', 'Winter 2014', 'winter',
+                new Date(2014, 11, 21), new Date(2015, 2, 21), null, 100, null],
+            ['2015Spring', 'Spring 2015', 'spring',
+                new Date(2015, 2, 22), new Date(2015, 5, 20), null, 50, null],
+            ['2015Summer', 'Summer 2015', 'summer',
+                new Date(2015, 5, 21), new Date(2015, 8, 20), null, 0, null],
+            ['2015Autumn', 'Autumn 2015', 'autumn',
+                new Date(2015, 8, 21), new Date(2015, 11, 20), null, 0, null],
+            ['2015Winter', 'Winter 2015', 'winter',
+                new Date(2015, 11, 21), new Date(2016, 2, 21), null, 0, null],
+            ['Football', 'Football Season', 'sports',
+                new Date(2014, 8, 4), new Date(2015, 1, 1), null, 100, null],
+            ['Baseball', 'Baseball Season', 'sports',
+                new Date(2015, 2, 31), new Date(2015, 9, 20), null, 14, null],
+            ['Basketball', 'Basketball Season', 'sports',
+                new Date(2014, 9, 28), new Date(2015, 5, 20), null, 86, null],
+            ['Hockey', 'Hockey Season', 'sports',
+                new Date(2014, 9, 8), new Date(2015, 5, 21), null, 89, null]
+        ]);
 
-    private chart: any = makeChart({
-        dataProvider: this.data,
-        fillColors: "red"
-    });
+        var options = {
+            height: 400,
+            gantt: {
+                trackHeight: 30
+            }
+        };
+        console.log(document.getElementById('chartdiv'));
+        let chart = new google.visualization.Gantt(document.getElementById('chartdiv'));
 
-    /*change() {
-      this.chart = makeChart({
-        dataProvider: this.data.map((x: Data) => {
-          return {
-            country: x.country,
-            visits: Math.floor(Math.random() * 100),
-            color: x.color
-          };
-        }),
-        fillColors: "green"
-      });
-    }*/
+        chart.draw(data, options);}
+    daysToMilliseconds(days) {
+        return days * 24 * 60 * 60 * 1000;
+    }
 }
