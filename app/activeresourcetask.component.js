@@ -12,22 +12,22 @@ var core_1 = require('@angular/core');
 var makeChart = function (_a) {
     var dataProvider = _a.dataProvider, fillColors = _a.fillColors;
     return {
-        "type": "serial",
+        "type": "gantt",
         "theme": "light",
         "marginRight": 70,
+        "period": "DD",
+        "dataDateFormat": "YYYY-MM-DD",
         "columnWidth": 0.5,
-        "dataProvider": dataProvider,
-        "valueAxes": [{
-                "type": "date",
-                "title": "Visitors from country"
-            }],
+        "valueAxis": {
+            "type": "date"
+        },
         "brightnessStep": 7,
         "graph": {
             "fillAlphas": 1,
             "lineAlpha": 1,
             "lineColor": "#fff",
             //"fillAlphas": 0.85,
-            "balloonText": "<b>[[category]]</b><br>starts at [[startTime]]<br>ends at [[endTime]]"
+            "balloonText": "<b>[[task]]</b>:<br />[[open]] -- [[value]]"
         },
         "rotate": true,
         "categoryField": "category",
@@ -35,9 +35,7 @@ var makeChart = function (_a) {
         "colorField": "color",
         "startDateField": "start",
         "endDateField": "end",
-        "export": {
-            "enabled": true
-        },
+        "dataProvider": dataProvider,
         "valueScrollbar": {
             "autoGridCount": true
         },
@@ -50,6 +48,9 @@ var makeChart = function (_a) {
             "valueLineEnabled": true,
             "zoomable": false,
             "valueZoomable": true
+        },
+        "export": {
+            "enabled": true
         }
     };
 };
@@ -59,101 +60,101 @@ var ActiveResourceTaskComponent = (function () {
         this.data = [{
                 "category": "Module #1",
                 "segments": [{
-                        "start": 1,
-                        "end": 2,
+                        "start": "2016-01-01",
+                        "end": "2016-01-14",
                         "color": "#b9783f",
                         "task": "Gathering requirements"
                     }, {
-                        "start": 4,
-                        "end": 5,
+                        "start": "2016-01-16",
+                        "end": "2016-01-27",
                         "task": "Producing specifications"
                     }, {
-                        "start": 7,
-                        "end": 10,
+                        "start": "2016-02-05",
+                        "end": "2016-04-18",
                         "task": "Development"
                     }, {
-                        "start": 11,
-                        "end": 13,
+                        "start": "2016-04-18",
+                        "end": new Date().getTime(),
                         "task": "Testing and QA"
                     }]
             }, {
                 "category": "Module #2",
                 "segments": [{
-                        "start": 1,
-                        "end": 3,
+                        "start": "2016-01-08",
+                        "end": "2016-01-10",
                         "color": "#cc4748",
                         "task": "Gathering requirements"
                     }, {
-                        "start": 4,
-                        "end": 5,
+                        "start": "2016-01-12",
+                        "end": "2016-01-15",
                         "task": "Producing specifications"
                     }, {
-                        "start": 5,
-                        "end": 7,
+                        "start": "2016-01-16",
+                        "end": "2016-02-05",
                         "task": "Development"
                     }, {
-                        "start": 7,
-                        "end": 9,
+                        "start": "2016-02-10",
+                        "end": "2016-02-18",
                         "task": "Testing and QA"
                     }]
             }, {
                 "category": "Module #3",
                 "segments": [{
-                        "start": 2,
-                        "end": 4,
+                        "start": "2016-01-02",
+                        "end": "2016-01-08",
                         "color": "#cd82ad",
                         "task": "Gathering requirements"
                     }, {
-                        "start": 5,
-                        "end": 6,
+                        "start": "2016-01-08",
+                        "end": "2016-01-16",
                         "task": "Producing specifications"
                     }, {
-                        "start": 6,
-                        "end": 7,
+                        "start": "2016-01-19",
+                        "end": "2016-03-01",
                         "task": "Development"
                     }, {
-                        "start": 7,
-                        "end": 8,
+                        "start": "2016-03-12",
+                        "end": "2016-04-05",
                         "task": "Testing and QA"
                     }]
             }, {
                 "category": "Module #4",
                 "segments": [{
-                        "start": 3,
-                        "end": 4,
+                        "start": "2016-01-01",
+                        "end": "2016-01-19",
                         "color": "#2f4074",
                         "task": "Gathering requirements"
                     }, {
-                        "start": 6,
-                        "end": 7,
+                        "start": "2016-01-19",
+                        "end": "2016-02-03",
                         "task": "Producing specifications"
                     }, {
-                        "start": 7,
-                        "end": 8,
+                        "start": "2016-03-20",
+                        "end": "2016-04-25",
                         "task": "Development"
                     }, {
-                        "start": 11,
-                        "end": 13,
+                        "start": "2016-04-27",
+                        "end": "2016-05-15",
                         "task": "Testing and QA"
                     }]
             }, {
                 "category": "Module #5",
                 "segments": [{
-                        "start": 4,
-                        "end": 6,
+                        "start": "2016-01-01",
+                        "end": "2016-01-12",
                         "color": "#448e4d",
                         "task": "Gathering requirements"
                     }, {
-                        "start": 6,
-                        "end": 7,
+                        "start": "2016-01-12",
+                        "end": "2016-01-19",
                         "task": "Producing specifications"
                     }, {
-                        "start": 8,
-                        "end": 9,
+                        "start": "2016-01-19",
+                        "end": "2016-03-01",
                         "task": "Development"
                     }, {
-                        "start": 9,
-                        "end": 11,
+                        "start": "2016-03-08",
+                        "end": "2016-03-30",
                         "task": "Testing and QA"
                     }]
             }];
