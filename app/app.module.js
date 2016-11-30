@@ -14,15 +14,17 @@ var forms_1 = require('@angular/forms');
 var router_1 = require('@angular/router');
 var http_1 = require('@angular/http');
 var angular2_chartjs_1 = require('angular2-chartjs');
+var amcharts_directive_1 = require('amcharts3-angular2/amcharts.directive');
 //import {ChartsModule} from 'ng2-charts/ng2-charts';
 var app_component_1 = require('./app.component');
 var utilization_component_1 = require('./utilization.component');
 var switchframestats_component_1 = require('./switchframestats.component');
 var droppedframestats_component_1 = require('./droppedframestats.component');
 var switchportmemoryutilization_component_1 = require('./switchportmemoryutilization.component');
-var activeresourcetask_component_1 = require('./activeresourcetask.component');
+var topology_component_1 = require('./topology.component');
 var latency_component_1 = require('./latency.component');
 var home_component_1 = require('./home.component');
+var activeresourcetask_component_1 = require('./activeresourcetask.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -55,12 +57,16 @@ var AppModule = (function () {
                         component: switchportmemoryutilization_component_1.SwitchPortMemoryUtilizationComponent
                     },
                     {
-                        path: 'Active-Resource-Task',
-                        component: activeresourcetask_component_1.ActiveResourceTaskComponent
+                        path: 'Topology',
+                        component: topology_component_1.TopologyComponent
                     },
                     {
                         path: 'Latency',
                         component: latency_component_1.LatencyComponent
+                    },
+                    {
+                        path: 'Active-Resource-Task',
+                        component: activeresourcetask_component_1.ActiveResourceTaskComponent
                     }
                 ]),
                 http_1.HttpModule,
@@ -72,9 +78,11 @@ var AppModule = (function () {
                 switchframestats_component_1.SwitchFrameStatsComponent,
                 switchportmemoryutilization_component_1.SwitchPortMemoryUtilizationComponent,
                 droppedframestats_component_1.DroppedFrameStatsComponent,
-                activeresourcetask_component_1.ActiveResourceTaskComponent,
+                topology_component_1.TopologyComponent,
                 latency_component_1.LatencyComponent,
-                home_component_1.HomeComponent
+                home_component_1.HomeComponent,
+                activeresourcetask_component_1.ActiveResourceTaskComponent,
+                amcharts_directive_1.AmChartsDirective
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

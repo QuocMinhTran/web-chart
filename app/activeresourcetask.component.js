@@ -9,188 +9,163 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var makeChart = function (_a) {
+    var dataProvider = _a.dataProvider, fillColors = _a.fillColors;
+    return {
+        "type": "serial",
+        "theme": "light",
+        "marginRight": 70,
+        "columnWidth": 0.5,
+        "dataProvider": dataProvider,
+        "valueAxes": [{
+                "type": "date",
+                "title": "Visitors from country"
+            }],
+        "brightnessStep": 7,
+        "graph": {
+            "fillAlphas": 1,
+            "lineAlpha": 1,
+            "lineColor": "#fff",
+            //"fillAlphas": 0.85,
+            "balloonText": "<b>[[category]]</b><br>starts at [[startTime]]<br>ends at [[endTime]]"
+        },
+        "rotate": true,
+        "categoryField": "category",
+        "segmentsField": "segments",
+        "colorField": "color",
+        "startDateField": "start",
+        "endDateField": "end",
+        "export": {
+            "enabled": true
+        },
+        "valueScrollbar": {
+            "autoGridCount": true
+        },
+        "chartCursor": {
+            "cursorColor": "#55bb76",
+            "valueBalloonsEnabled": false,
+            "cursorAlpha": 0,
+            "valueLineAlpha": 0.5,
+            "valueLineBalloonEnabled": true,
+            "valueLineEnabled": true,
+            "zoomable": false,
+            "valueZoomable": true
+        }
+    };
+};
 var ActiveResourceTaskComponent = (function () {
     function ActiveResourceTaskComponent() {
+        this.id = "chartdiv";
+        this.data = [{
+                "category": "Module #1",
+                "segments": [{
+                        "start": 1,
+                        "end": 2,
+                        "color": "#b9783f",
+                        "task": "Gathering requirements"
+                    }, {
+                        "start": 4,
+                        "end": 5,
+                        "task": "Producing specifications"
+                    }, {
+                        "start": 7,
+                        "end": 10,
+                        "task": "Development"
+                    }, {
+                        "start": 11,
+                        "end": 13,
+                        "task": "Testing and QA"
+                    }]
+            }, {
+                "category": "Module #2",
+                "segments": [{
+                        "start": 1,
+                        "end": 3,
+                        "color": "#cc4748",
+                        "task": "Gathering requirements"
+                    }, {
+                        "start": 4,
+                        "end": 5,
+                        "task": "Producing specifications"
+                    }, {
+                        "start": 5,
+                        "end": 7,
+                        "task": "Development"
+                    }, {
+                        "start": 7,
+                        "end": 9,
+                        "task": "Testing and QA"
+                    }]
+            }, {
+                "category": "Module #3",
+                "segments": [{
+                        "start": 2,
+                        "end": 4,
+                        "color": "#cd82ad",
+                        "task": "Gathering requirements"
+                    }, {
+                        "start": 5,
+                        "end": 6,
+                        "task": "Producing specifications"
+                    }, {
+                        "start": 6,
+                        "end": 7,
+                        "task": "Development"
+                    }, {
+                        "start": 7,
+                        "end": 8,
+                        "task": "Testing and QA"
+                    }]
+            }, {
+                "category": "Module #4",
+                "segments": [{
+                        "start": 3,
+                        "end": 4,
+                        "color": "#2f4074",
+                        "task": "Gathering requirements"
+                    }, {
+                        "start": 6,
+                        "end": 7,
+                        "task": "Producing specifications"
+                    }, {
+                        "start": 7,
+                        "end": 8,
+                        "task": "Development"
+                    }, {
+                        "start": 11,
+                        "end": 13,
+                        "task": "Testing and QA"
+                    }]
+            }, {
+                "category": "Module #5",
+                "segments": [{
+                        "start": 4,
+                        "end": 6,
+                        "color": "#448e4d",
+                        "task": "Gathering requirements"
+                    }, {
+                        "start": 6,
+                        "end": 7,
+                        "task": "Producing specifications"
+                    }, {
+                        "start": 8,
+                        "end": 9,
+                        "task": "Development"
+                    }, {
+                        "start": 9,
+                        "end": 11,
+                        "task": "Testing and QA"
+                    }]
+            }];
+        this.chart = makeChart({
+            dataProvider: this.data,
+            fillColors: "red"
+        });
     }
-    ActiveResourceTaskComponent.prototype.ngOnInit = function () {
-        //this.destroy();
-        this.nodes = new vis.DataSet([
-            { id: 1, value: 3, label: 'Thomas', shape: 'dot', group: 0 },
-            { id: 2, value: 4, label: 'Tom', shape: 'square', group: 1 },
-        ]);
-        var newnode = { id: 3, value: 2, label: 'Minh', shape: 'diamond', group: 1, size: 200 };
-        console.log(this.nodes);
-        console.log(newnode);
-        this.nodes.add(newnode);
-        this.nodes.update([{ id: 3, color: { background: 'white' } }]);
-        this.edges = new vis.DataSet([
-            { id: 1, from: 1, to: 2 },
-            { id: 2, from: 2, to: 3 }
-        ]);
-        var options = {
-            layout: { randomSeed: 2 },
-            physics: false,
-            nodes: {
-                font: {
-                    size: 12,
-                    face: 'Times New Roman'
-                }
-            },
-            edges: {
-                color: { inherit: true },
-                width: 1,
-                smooth: {
-                    type: 'straightCross',
-                    roundness: 0
-                }
-            },
-            manipulation: {
-                addEdge: function (data, callback) {
-                    if (data.from == data.to) {
-                        var r = confirm('Do you want to connect the node to itself?');
-                        if (r == true) {
-                            callback(data);
-                        }
-                    }
-                    else {
-                        callback(data);
-                    }
-                },
-            }
-        };
-        var data = {
-            nodes: this.nodes,
-            edges: this.edges
-        };
-        this.network = new vis.Network(document.getElementById('mynetwork'), data, options);
-        this.network.on("selectNode", function (params) {
-            //let nodeInfo = JSON.stringify(params,null,4);
-            console.log(params);
-            //console.log(nodeInfo);
-            document.getElementById('node-id').value = params.nodes;
-            document.getElementById('node-label').value = '';
-            document.getElementById('node-shape').value = '';
-        });
-        this.network.on("selectEdge", function (params) {
-            //let nodeInfo = JSON.stringify(params,null,4);
-            console.log(params);
-            //console.log(nodeInfo);
-            document.getElementById('edge-id').value = params.edges;
-            document.getElementById('edge-from').value = '';
-            document.getElementById('edge-to').value = '';
-        });
-        /*function saveData(data, callback) {
-            data.id = (<HTMLInputElement>document.getElementById('node-id')).value;
-            data.label = (<HTMLInputElement>document.getElementById('node-label')).value;
-            this.clearPopUp();
-            callback(data);
-        };
-        function clearPopUp() {
-            document.getElementById('saveButton').onclick = null;
-            document.getElementById('cancelButton').onclick = null;
-            document.getElementById('network-popUp').style.display = 'none';
-        };
-        function cancelEdit(callback) {
-            this.clearPopUp();
-            callback(null);
-        }*/
-    };
-    ;
-    ActiveResourceTaskComponent.prototype.addNode = function () {
-        try {
-            var popup = document.getElementById('myPopup');
-            if (document.getElementById('node-id').value != '') {
-                this.nodes.add({
-                    id: document.getElementById('node-id').value,
-                    label: document.getElementById('node-label').value,
-                    shape: document.getElementById('node-shape').value.toLowerCase(),
-                    x: 0,
-                    y: 0
-                });
-                popup.classList.toggle('hidden');
-            }
-            else {
-                popup.classList.toggle('show');
-            }
-            console.log(document.getElementById('node-shape').value.toLowerCase());
-        }
-        catch (err) {
-            alert(err);
-        }
-    };
-    ActiveResourceTaskComponent.prototype.updateNode = function () {
-        try {
-            console.log(this.nodes.get(document.getElementById('node-id').value));
-            if (this.nodes.get(document.getElementById('node-id').value) !== null) {
-                this.nodes.update({
-                    id: document.getElementById('node-id').value,
-                    label: document.getElementById('node-label').value,
-                    shape: document.getElementById('node-shape').value.toLowerCase()
-                });
-            }
-            else {
-                alert('This node does not exist yet');
-            }
-            ;
-            console.log(this.nodes);
-        }
-        catch (err) {
-            alert(err);
-        }
-    };
-    ActiveResourceTaskComponent.prototype.removeNode = function () {
-        try {
-            if (this.nodes.get(document.getElementById('node-id').value) !== null) {
-                this.nodes.remove({
-                    id: document.getElementById('node-id').value,
-                });
-            }
-            else {
-                alert('You cannot delete an unexist node');
-            }
-        }
-        catch (err) {
-            alert(err);
-        }
-    };
-    ActiveResourceTaskComponent.prototype.addEdge = function () {
-        try {
-            this.edges.add({
-                id: document.getElementById('edge-id').value,
-                from: document.getElementById('edge-from').value,
-                to: document.getElementById('edge-to').value,
-                arrows: 'to'
-            });
-        }
-        catch (err) {
-            alert(err);
-        }
-    };
-    ActiveResourceTaskComponent.prototype.updateEdge = function () {
-        try {
-            this.edges.update({
-                id: document.getElementById('edge-id').value,
-                from: document.getElementById('edge-from').value,
-                to: document.getElementById('edge-to').value,
-                arrows: 'to'
-            });
-        }
-        catch (err) {
-            alert(err);
-        }
-    };
-    ActiveResourceTaskComponent.prototype.removeEdge = function () {
-        try {
-            this.edges.remove({ id: document.getElementById('edge-id').value });
-        }
-        catch (err) {
-            alert(err);
-        }
-    };
     ActiveResourceTaskComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'active-resource-task',
+            selector: 'activeresourcetask',
             templateUrl: 'activeresourcetask.html'
         }), 
         __metadata('design:paramtypes', [])

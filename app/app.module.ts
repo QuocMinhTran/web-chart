@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {HttpModule, JsonpModule} from '@angular/http';
 
 import {ChartModule} from 'angular2-chartjs';
+import {AmChartsDirective} from 'amcharts3-angular2/amcharts.directive';
 //import {ChartsModule} from 'ng2-charts/ng2-charts';
 
 import { AppComponent } from './app.component';
@@ -12,9 +13,10 @@ import { UtilizationConponent} from './utilization.component';
 import { SwitchFrameStatsComponent} from './switchframestats.component';
 import { DroppedFrameStatsComponent} from './droppedframestats.component';
 import { SwitchPortMemoryUtilizationComponent} from './switchportmemoryutilization.component';
-import {ActiveResourceTaskComponent} from './activeresourcetask.component';
+import {TopologyComponent} from './topology.component';
 import {LatencyComponent} from './latency.component';
 import {HomeComponent} from './home.component';
+import {ActiveResourceTaskComponent} from './activeresourcetask.component';
 
 @NgModule({
     imports: [
@@ -44,12 +46,16 @@ import {HomeComponent} from './home.component';
                 component: SwitchPortMemoryUtilizationComponent
             },
             {
-                path:'Active-Resource-Task',
-                component: ActiveResourceTaskComponent
+                path:'Topology',
+                component: TopologyComponent
             },
             {
                 path:'Latency',
                 component: LatencyComponent
+            },
+            {
+                path:'Active-Resource-Task',
+                component:ActiveResourceTaskComponent
             }
         ]),
         HttpModule,
@@ -61,9 +67,11 @@ import {HomeComponent} from './home.component';
         SwitchFrameStatsComponent,
         SwitchPortMemoryUtilizationComponent,
         DroppedFrameStatsComponent,
-        ActiveResourceTaskComponent,
+        TopologyComponent,
         LatencyComponent,
-        HomeComponent
+        HomeComponent,
+        ActiveResourceTaskComponent,
+        AmChartsDirective
         ],
     bootstrap: [AppComponent]
 })
