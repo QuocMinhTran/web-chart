@@ -20,8 +20,8 @@ const makeChart = ({ dataProvider, fillColors }: Configuration) => {
         "type": "gantt",
         "theme": "light",
         "marginRight": 70,
-        "period": "DD",
-        "dataDateFormat": "YYYY-MM-DD",
+        "period": "QQ",
+        "dataDateFormat": "JJ:NN:SS",
         "columnWidth": 0.5,
         "valueAxis": {
             "type": "date"
@@ -32,7 +32,7 @@ const makeChart = ({ dataProvider, fillColors }: Configuration) => {
             "lineAlpha": 1,
             "lineColor": "#fff",
             //"fillAlphas": 0.85,
-            "balloonText": "<b>[[task]]</b>:<br />[[open]] -- [[value]]"
+            "balloonText": "<b>[[task]]</b>:<br />[[start]] -- [[end]]"
         },
         "rotate": true,
         "categoryField": "category",
@@ -71,101 +71,101 @@ export class ActiveResourceTaskComponent {
     private data: any = [{
         "category": "Module #1",
         "segments": [{
-            "start": "2016-01-01",
-            "end": "2016-01-14",
+            "start": 1,
+            "end": 2,
             "color": "#b9783f",
             "task": "Gathering requirements"
         }, {
-            "start": "2016-01-16",
-            "end": "2016-01-27",
+            "start": 2,
+            "end": 3,
             "task": "Producing specifications"
         }, {
-            "start": "2016-02-05",
-            "end": "2016-04-18",
+            "start": 5,
+            "end": 6,
             "task": "Development"
         }, {
-            "start": "2016-04-18",
-            "end": new Date().getTime(),
+            "start": 6,
+            "end": 10,
             "task": "Testing and QA"
         }]
     }, {
         "category": "Module #2",
         "segments": [{
-            "start": "2016-01-08",
-            "end": "2016-01-10",
+            "start": 2,
+            "end": 3,
             "color": "#cc4748",
             "task": "Gathering requirements"
         }, {
-            "start": "2016-01-12",
-            "end": "2016-01-15",
+            "start": 5,
+            "end": 6,
             "task": "Producing specifications"
         }, {
-            "start": "2016-01-16",
-            "end": "2016-02-05",
+            "start": 7,
+            "end": 9,
             "task": "Development"
         }, {
-            "start": "2016-02-10",
-            "end": "2016-02-18",
+            "start": 10,
+            "end": 12,
             "task": "Testing and QA"
         }]
     }, {
         "category": "Module #3",
         "segments": [{
-            "start": "2016-01-02",
-            "end": "2016-01-08",
+            "start": 3,
+            "end": 5,
             "color": "#cd82ad",
             "task": "Gathering requirements"
         }, {
-            "start": "2016-01-08",
-            "end": "2016-01-16",
+            "start": 6,
+            "end": 8,
             "task": "Producing specifications"
         }, {
-            "start": "2016-01-19",
-            "end": "2016-03-01",
+            "start": 9,
+            "end": 11,
             "task": "Development"
         }, {
-            "start": "2016-03-12",
-            "end": "2016-04-05",
+            "start": 15,
+            "end": 19,
             "task": "Testing and QA"
         }]
     }, {
         "category": "Module #4",
         "segments": [{
-            "start": "2016-01-01",
-            "end": "2016-01-19",
+            "start": 6,
+            "end": 9,
             "color": "#2f4074",
             "task": "Gathering requirements"
         }, {
-            "start": "2016-01-19",
-            "end": "2016-02-03",
+            "start": 11,
+            "end": 16,
             "task": "Producing specifications"
         }, {
-            "start": "2016-03-20",
-            "end": "2016-04-25",
+            "start": 16,
+            "end": 18,
             "task": "Development"
         }, {
-            "start": "2016-04-27",
-            "end": "2016-05-15",
+            "start": 19,
+            "end": 22,
             "task": "Testing and QA"
         }]
     }, {
         "category": "Module #5",
         "segments": [{
-            "start": "2016-01-01",
-            "end": "2016-01-12",
+            "start": 4,
+            "end": 6,
             "color": "#448e4d",
             "task": "Gathering requirements"
         }, {
-            "start": "2016-01-12",
-            "end": "2016-01-19",
+            "start": 7,
+            "end": 9,
             "task": "Producing specifications"
         }, {
-            "start": "2016-01-19",
-            "end": "2016-03-01",
+            "start": 11,
+            "end": 15,
             "task": "Development"
         }, {
-            "start": "2016-03-08",
-            "end": "2016-03-30",
+            "start": 16,
+            "end":18,
             "task": "Testing and QA"
         }]
     }]
