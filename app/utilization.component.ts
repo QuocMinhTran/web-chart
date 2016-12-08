@@ -117,9 +117,17 @@ export class UtilizationConponent implements OnInit {
         ];*/
 
         // gojs library
+        let temp = 5;
         let $ = go.GraphObject.make;
         let myDiagram = $(go.Diagram, "myDiagram",  // create a Diagram for the DIV HTML element
             {
+                "clickCreatingTool.archetypeNodeData": {}, // allow double-click in background to create a new node
+                "clickCreatingTool.insertPart": function (loc) {  // customize the data for the new node
+                    this.archetypeNodeData = {
+                        key: temp + 1, text: "New Node", color: "lightblue"
+                    };
+                    return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
+                },
                 initialContentAlignment: go.Spot.Center,  // center the content
                 "linkingTool.isEnabled": false,  // invoked explicitly by drawLink function, below
                 "linkingTool.direction": go.LinkingTool.ForwardsOnly,  // only draw "from" towards "to"
@@ -128,10 +136,15 @@ export class UtilizationConponent implements OnInit {
 
         myDiagram.linkTemplate =
             $(go.Link,
-                { routing: go.Link.AvoidsNodes, corner: 5 },
-                $(go.Shape, { strokeWidth: 1.5 }),
-                $(go.Shape, { toArrow: "OpenTriangle" })
+                { routing: go.Link.AvoidsNodes, curve: go.Link.JumpGap, corner: 10, reshapable: true, toShortLength: 7 },
+                new go.Binding("points").makeTwoWay(),
+                // mark each Shape to get the link geometry with isPanelMain: true
+                $(go.Shape, { isPanelMain: true, stroke: "black", strokeWidth: 5 }),
+                $(go.Shape, { isPanelMain: true, stroke: "gray", strokeWidth: 3 }),
+                $(go.Shape, { isPanelMain: true, stroke: "white", strokeWidth: 1, name: "PIPE", strokeDashArray: [10, 10] }),
+                $(go.Shape, { toArrow: "Triangle", fill: "black", stroke: null })
             );
+        
 
         myDiagram.nodeTemplate =
             $(go.Node, "Auto",
@@ -220,7 +233,7 @@ export class UtilizationConponent implements OnInit {
                     )
                 )
             );
-
+        
         function editText(e, button) {
             var node = button.part.adornedPart;
             e.diagram.commandHandler.editTextBlock(node.findObject("TEXTBLOCK"));

@@ -101,16 +101,26 @@ var UtilizationConponent = (function () {
             }
         ];*/
         // gojs library
+        var temp = 5;
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "myDiagram", // create a Diagram for the DIV HTML element
         {
+            "clickCreatingTool.archetypeNodeData": {},
+            "clickCreatingTool.insertPart": function (loc) {
+                this.archetypeNodeData = {
+                    key: temp + 1, text: "New Node", color: "lightblue"
+                };
+                return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
+            },
             initialContentAlignment: go.Spot.Center,
             "linkingTool.isEnabled": false,
             "linkingTool.direction": go.LinkingTool.ForwardsOnly,
             "undoManager.isEnabled": true // enable undo & redo
         });
         myDiagram.linkTemplate =
-            $(go.Link, { routing: go.Link.AvoidsNodes, corner: 5 }, $(go.Shape, { strokeWidth: 1.5 }), $(go.Shape, { toArrow: "OpenTriangle" }));
+            $(go.Link, { routing: go.Link.AvoidsNodes, curve: go.Link.JumpGap, corner: 10, reshapable: true, toShortLength: 7 }, new go.Binding("points").makeTwoWay(), 
+            // mark each Shape to get the link geometry with isPanelMain: true
+            $(go.Shape, { isPanelMain: true, stroke: "black", strokeWidth: 5 }), $(go.Shape, { isPanelMain: true, stroke: "gray", strokeWidth: 3 }), $(go.Shape, { isPanelMain: true, stroke: "white", strokeWidth: 1, name: "PIPE", strokeDashArray: [10, 10] }), $(go.Shape, { toArrow: "Triangle", fill: "black", stroke: null }));
         myDiagram.nodeTemplate =
             $(go.Node, "Auto", {
                 desiredSize: new go.Size(80, 80),
