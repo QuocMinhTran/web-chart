@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
+import { GetDataService } from './getdata.service';
+import { links } from './links';
+
+declare var AmCharts: any;
 interface Data {
     category: string;
     segments: Array<Block>;
@@ -63,10 +67,105 @@ const makeChart = ({ dataProvider, fillColors }: Configuration) => {
 @Component({
     moduleId: module.id,
     selector: 'activeresourcetask',
-    templateUrl: 'activeresourcetask.html'
+    templateUrl: 'activeresourcetask.html',
+    providers: [GetDataService]
 })
-export class ActiveResourceTaskComponent {
-    private id: string = "chartdiv";
+export class ActiveResourceTaskComponent implements OnInit {
+    dataset = [];
+    error: any;
+    //private chart: any;
+    constructor(private getdataservice: GetDataService) { };
+    ngOnInit() {
+        this.DrawChart();
+    }
+    DrawChart() {
+        this.getdataservice.getData(links[8])
+            .subscribe(actask => {
+                this.getdataservice.getData(links[0])
+                    .subscribe(act => {
+                        this.getdataservice.getData(links[3])
+                            .subscribe(task => {
+                                let taskdetail :string;
+                                act.forEach((element, index) => {
+                                    let category: string;
+                                    let segments = [];
+                                    for (let a of actask) {
+                                        if (element.ID == a.ACTIVERESOURCE_ID) {
+                                            category = element.NAME;
+                                            for (let b of task) {
+                                                if (a.TASKDESCRIPTION_ID == b.ID) {
+                                                    //taskdetail = b.NAME;
+                                                    let block={"start": a.STARTTIME,
+                                                        "end": a.ENDTIME,
+                                                        "color": "#b9783f",
+                                                        "task": b.NAME};
+                                                    segments.push(block);
+                                                }
+                                            }
+                                        }
+                                    };
+                                    this.dataset.push({
+                                        "category": category,
+                                        "segments": segments
+                                    })
+                                });
+                                console.log(this.dataset);
+                                // this.chart = makeChart({
+                                //     dataProvider: this.dataset,
+                                //     fillColors: "red"
+                                // })
+                                // return this.chart;
+                                AmCharts.useUTC = true;
+                                var chart = AmCharts.makeChart("chartdiv", {
+                                    "type": "gantt",
+                                    "theme": "light",
+                                    "marginRight": 70,
+                                    "period": "DD",
+                                    "dataDateFormat": "YYYY-MM-DD",
+                                    "columnWidth": 0.5,
+                                    "valueAxis": {
+                                        "type": "date"
+                                    },
+                                    "brightnessStep": 7,
+                                    "graph": {
+                                        "fillAlphas": 1,
+                                        "lineAlpha": 1,
+                                        "lineColor": "#fff",
+                                        //"fillAlphas": 0.85,
+                                        "balloonText": "<b>[[task]]</b>:<br />[[open]] -- [[value]]"
+                                    },
+                                    "rotate": true,
+                                    "categoryField": "category",
+                                    "segmentsField": "segments",
+                                    "colorField": "color",
+                                    "startDateField": "start",
+                                    "endDateField": "end",
+                                    "dataProvider": this.dataset,
+                                    "valueScrollbar": {
+                                        "autoGridCount": true
+                                    },
+                                    "chartCursor": {
+                                        "cursorColor": "#55bb76",
+                                        "valueBalloonsEnabled": false,
+                                        "cursorAlpha": 0,
+                                        "valueLineAlpha": 0.5,
+                                        "valueLineBalloonEnabled": true,
+                                        "valueLineEnabled": true,
+                                        "zoomable": false,
+                                        "valueZoomable": true
+                                    },
+                                    "export": {
+                                        "enabled": true
+                                    }
+                                });
+                                return chart;
+                            });
+
+                    })
+            }, err => this.error = <any>err);
+    }
+
+    /*private id: string = "chartdiv";
 
     private data: any = [{
         "category": "Module #1",
@@ -165,16 +264,14 @@ export class ActiveResourceTaskComponent {
             "task": "Development"
         }, {
             "start": 16,
-            "end":18,
+            "end": 18,
             "task": "Testing and QA"
         }]
     }]
-
-    private chart: any = makeChart({
+    private chart = makeChart({
         dataProvider: this.data,
-        fillColors: "red"
-    });
-
+        fillColors:"red"
+    })
     /*change() {
       this.chart = makeChart({
         dataProvider: this.data.map((x: Data) => {
@@ -184,6 +281,32 @@ export class ActiveResourceTaskComponent {
             color: x.color
           };
         }),
+        fillColors: "green"
+      });
+    }*/
+    /*Onclick() {
+        this.data.push({"category": "Module #6",
+            "segments": [{
+                "start": 4,
+                "end": 6,
+                "color": "#448e4d",
+                "task": "Gathering requirements"
+            }, {
+                "start": 7,
+                "end": 9,
+                "task": "Producing specifications"
+            }, {
+                "start": 11,
+                "end": 15,
+                "task": "Development"
+            }, {
+                "start": 16,
+                "end": 18,
+                "task": "Testing and QA"
+            }]})
+            console.log(this.data);
+        this.chart = makeChart({
+        dataProvider: this.data,
         fillColors: "green"
       });
     }*/

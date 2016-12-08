@@ -16,6 +16,7 @@ var http_1 = require('@angular/http');
 var angular2_chartjs_1 = require('angular2-chartjs');
 var amcharts_directive_1 = require('amcharts3-angular2/amcharts.directive');
 //import {ChartsModule} from 'ng2-charts/ng2-charts';
+var ng2_nvd3_1 = require('../node_modules/ng2-nvd3/lib/ng2-nvd3');
 var app_component_1 = require('./app.component');
 var utilization_component_1 = require('./utilization.component');
 var switchframestats_component_1 = require('./switchframestats.component');
@@ -82,7 +83,8 @@ var AppModule = (function () {
                 latency_component_1.LatencyComponent,
                 home_component_1.HomeComponent,
                 activeresourcetask_component_1.ActiveResourceTaskComponent,
-                amcharts_directive_1.AmChartsDirective
+                amcharts_directive_1.AmChartsDirective,
+                ng2_nvd3_1.nvD3
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
