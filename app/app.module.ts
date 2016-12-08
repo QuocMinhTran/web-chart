@@ -7,7 +7,7 @@ import {HttpModule, JsonpModule} from '@angular/http';
 import {ChartModule} from 'angular2-chartjs';
 import {AmChartsDirective} from 'amcharts3-angular2/amcharts.directive';
 //import {ChartsModule} from 'ng2-charts/ng2-charts';
-import {nvD3} from '../node_modules/ng2-nvd3/lib/ng2-nvd3';
+//import {nvD3} from '../node_modules/ng2-nvd3/lib/ng2-nvd3';
 
 import { AppComponent } from './app.component';
 import { UtilizationConponent} from './utilization.component';
@@ -73,7 +73,7 @@ import {ActiveResourceTaskComponent} from './activeresourcetask.component';
         HomeComponent,
         ActiveResourceTaskComponent,
         AmChartsDirective,
-        nvD3
+        //nvD3
         ],
     bootstrap: [AppComponent]
 })
