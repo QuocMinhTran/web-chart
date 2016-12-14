@@ -4,7 +4,9 @@ import { Http, Response } from '@angular/http';
 import { GetDataService } from './getdata.service';
 import { links } from './links';
 
+
 declare var cytoscape: any;
+
 //declare var d3: any;
 declare var go: any;
 import './rxjs-operators';
@@ -28,6 +30,7 @@ export class UtilizationConponent implements OnInit {
     // };
     options: any;
     data: any;
+    canvas: any
     constructor(private getdataservice: GetDataService) {
     }
     ngOnInit() {
@@ -49,6 +52,7 @@ export class UtilizationConponent implements OnInit {
 
         graph.render();*/
 
+        
         // NVD3 library
         /*this.options = {
             chart: {
@@ -336,6 +340,7 @@ export class UtilizationConponent implements OnInit {
                 { from: 1, to: 2 }
             ]);
     }
+    
     getUtilization(): void {
         this.getdataservice.getData(links[5])
             .subscribe(res => {
