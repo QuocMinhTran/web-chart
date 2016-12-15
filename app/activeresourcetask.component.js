@@ -76,20 +76,21 @@ var ActiveResourceTaskComponent = (function () {
                     .subscribe(function (task) {
                     var taskdetail;
                     act.forEach(function (element, index) {
-                        var category;
+                        var category = element.NAME;
                         var segments = [];
                         for (var _i = 0, actask_1 = actask; _i < actask_1.length; _i++) {
                             var a = actask_1[_i];
                             if (element.ID == a.ACTIVERESOURCE_ID) {
-                                category = element.NAME;
                                 for (var _a = 0, task_1 = task; _a < task_1.length; _a++) {
                                     var b = task_1[_a];
                                     if (a.TASKDESCRIPTION_ID == b.ID) {
                                         //taskdetail = b.NAME;
-                                        var block = { "start": a.STARTTIME,
-                                            "end": a.ENDTIME,
+                                        var block = {
+                                            "start": a.STARTTIME * 1000,
+                                            "end": a.ENDTIME * 1000,
                                             "color": "#b9783f",
-                                            "task": b.NAME };
+                                            "task": b.NAME
+                                        };
                                         segments.push(block);
                                     }
                                 }
@@ -110,28 +111,29 @@ var ActiveResourceTaskComponent = (function () {
                     AmCharts.useUTC = true;
                     var chart = AmCharts.makeChart("chartdiv", {
                         "type": "gantt",
-                        "theme": "light",
-                        "marginRight": 70,
-                        "period": "DD",
-                        "dataDateFormat": "YYYY-MM-DD",
+                        "theme": "chalk",
+                        "period": "fff",
+                        "dataDateFormat": "YYYY-MM-DD HH:NN:SS",
+                        "balloonDateFormat": "QQQ",
                         "columnWidth": 0.5,
+                        "marginBottom": 30,
                         "valueAxis": {
-                            "type": "date"
+                            "type": "date",
+                            "minPeriod": "fff",
+                            "ignoreAxisWidth": true
                         },
                         "brightnessStep": 7,
                         "graph": {
                             "fillAlphas": 1,
-                            "lineAlpha": 1,
-                            "lineColor": "#fff",
-                            //"fillAlphas": 0.85,
-                            "balloonText": "<b>[[task]]</b>:<br />[[open]] -- [[value]]"
+                            "balloonText": "<b>[[task]]</b>: [[start]]  - [[end]]"
                         },
                         "rotate": true,
                         "categoryField": "category",
                         "segmentsField": "segments",
                         "colorField": "color",
-                        "startDateField": "start",
-                        "endDateField": "end",
+                        "startDate": "2015-01-01 00:00:00",
+                        "startField": "start",
+                        "endField": "end",
                         "dataProvider": _this.dataset,
                         "valueScrollbar": {
                             "autoGridCount": true
@@ -147,9 +149,10 @@ var ActiveResourceTaskComponent = (function () {
                             "valueZoomable": true
                         },
                         "export": {
-                            "enabled": true
+                            "enabled": true,
                         }
                     });
+                    console.log("hej");
                     return chart;
                 });
             });
